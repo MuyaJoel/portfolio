@@ -185,13 +185,14 @@
                         <label for="email">Email:</label><br>
                         <input type="email" name="email" id="email" placeholder="Enter your email address."><br>
                         <label for="comment">Comments:</label> <br>
-                        <textarea name="comment id="comment"></textarea><br>
+                        <textarea name="comment" id="comment" placeholder="Write your comment here..."></textarea><br>
                         <button type="submit">submit</button>
                     </form>
                    </div>
                     
                 </div>
             </div>
+            <span id="msg"></span>
         </div>
         <script>
             var smllinks = document.getElementsByClassName("sml-links");
@@ -210,25 +211,30 @@
         </script>
         <script src="https://unpkg.com/ionicons@5.5.2/dist/ionicons.js"></script>
 
-        <script>
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbzHshRuim8HCy4LJ5QVuInpmB4LEc0d3sr3hwM_9F517loQ8xJVUlkXzoEHfUKKBP6n/exec'
-            const form = document.forms['submit-to-google-sheet']
-            const msg=document.getElementById("msg")
-          
-            form.addEventListener('submit', e => {
-              e.preventDefault()
-              fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-                .then(response => {
-                    msg.innerHTML="Hey,Message sent successfully"
-                    setTimeout(function(){
-                        msg.innerHTML=""
-                    },5000)
-                    form.reset()
-                })
-                .catch(error => console.error('Error!', error.message))
+       
+
+
+<script>
+    const scriptURL = 'https://docs.google.com/spreadsheets/d/1efqFRc5YA-T5P8egz0n4ORQ9Viz27AQFquOWRH0OAak/edit?gid=0#gid=0'; // Replace with your newly deployed Apps Script URL
+    const form = document.forms['submit-to-google-sheet'];
+    const msg = document.getElementById("msg");
+
+    form.addEventListener('submit', e => {
+        e.preventDefault();
+        fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+            .then(response => {
+                msg.innerHTML = "Message sent successfully!";
+                setTimeout(function() {
+                    msg.innerHTML = "";
+                }, 5000);
+                form.reset();
             })
-          </script>
-        
+            .catch(error => {
+                msg.innerHTML = "Error sending message.";
+                console.error('Error!', error.message);
+            });
+    });
+</script>
          
     </body>
 
