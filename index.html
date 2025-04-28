@@ -179,14 +179,14 @@
                    </div>
                    <div class="comments">
                     <h2>Comments.</h2>
-                    <form action="submit">
+                    <form name="submit-to-google-sheet">
                         <label for="name">Full Names:</label><br>
                         <input type="text" name="name" id="name" placeholder="Enter your full names."><br>
                         <label for="email">Email:</label><br>
                         <input type="email" name="email" id="email" placeholder="Enter your email address."><br>
                         <label for="comment">Comments:</label> <br>
                         <textarea name="comment id="comment"></textarea><br>
-                        <button type="button">submit</button>
+                        <button type="submit">submit</button>
                     </form>
                    </div>
                     
@@ -209,6 +209,26 @@
 
         </script>
         <script src="https://unpkg.com/ionicons@5.5.2/dist/ionicons.js"></script>
+
+        <script>
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbzHshRuim8HCy4LJ5QVuInpmB4LEc0d3sr3hwM_9F517loQ8xJVUlkXzoEHfUKKBP6n/exec'
+            const form = document.forms['submit-to-google-sheet']
+            const msg=document.getElementById("msg")
+          
+            form.addEventListener('submit', e => {
+              e.preventDefault()
+              fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+                .then(response => {
+                    msg.innerHTML="Hey,Message sent successfully"
+                    setTimeout(function(){
+                        msg.innerHTML=""
+                    },5000)
+                    form.reset()
+                })
+                .catch(error => console.error('Error!', error.message))
+            })
+          </script>
+        
          
     </body>
 
